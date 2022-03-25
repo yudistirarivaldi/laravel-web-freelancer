@@ -168,7 +168,7 @@
                                         </div>
 
                                         <div class="col-span-6">
-                                            <label for="note" class="block mb-3 font-medium text-gray-700 text-md">Note <span class="text-gray-400">(Optional)</span></label>
+                                            <label for="note" class="block mb-3 font-medium text-gray-700 text-md">Note <span class="text-gray-400">(Required)</span></label>
                                             <input placeholder="Hal yang ingin disampaikan oleh kamu?" type="text" name="note" id="note" autocomplete="note" class="block w-full py-3 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" value="{{ old('note') }}">
 
                                             @if ($errors->has('note'))
@@ -177,7 +177,7 @@
                                         </div>
 
                                         <div class="col-span-6">
-                                            <label for="tagline" class="block mb-3 font-medium text-gray-700 text-md">Tagline <span class="text-gray-400">(Optional)</span></label>
+                                            <label for="tagline" class="block mb-3 font-medium text-gray-700 text-md">Tagline <span class="text-gray-400">(Required)</span></label>
 
                                             <div id="newTaglineRow"></div>
 
@@ -219,10 +219,8 @@
         $("#addAdvantagesRow").click(function() {
             var html = '';
             html += '<input placeholder="Keunggulan Kamu" type="text" name="advantage-user[]" id="advantage-user" autocomplete="advantage-user" class="block w-full py-3 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" required>';
-
             $('#newAdvantagesRow').append(html);
         });
-
         // remove row
         $(document).on('click', '#removeAdvantagesRow', function() {
             $(this).closest('#inputFormAdvantagesRow').remove();
@@ -234,10 +232,8 @@
         $("#addServicesRow").click(function() {
             var html = '';
             html += '<input placeholder="Keunggulan Service" type="text" name="advantage-service[]" id="advantage-service" autocomplete="advantage-service" class="block w-full py-3 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" required>';
-
             $('#newServicesRow').append(html);
         });
-
         // remove row
         $(document).on('click', '#removeServicesRow', function() {
             $(this).closest('#inputFormServicesRow').remove();
@@ -249,10 +245,8 @@
         $("#addTaglineRow").click(function() {
             var html = '';
             html += '<input placeholder="Tagline" type="text" name="tagline[]" id="tagline" autocomplete="tagline" class="block w-full py-3 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" required>';
-
             $('#newTaglineRow').append(html);
         });
-
         // remove row
         $(document).on('click', '#removeTaglineRow', function() {
             $(this).closest('#inputFormTaglineRow').remove();
@@ -264,10 +258,8 @@
         $("#addThumbnailRow").click(function() {
             var html = '';
             html += '<input placeholder="Keunggulan 3" type="file" name="thumbnail[]" id="thumbnail" autocomplete="thumbnail" class="block w-full py-3 pl-5 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" required>';
-
             $('#newThumbnailRow').append(html);
         });
-
         // remove row
         $(document).on('click', '#removeThumbnailRow', function() {
             $(this).closest('#inputFormThumbnailRow').remove();

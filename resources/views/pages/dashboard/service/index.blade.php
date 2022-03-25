@@ -65,7 +65,7 @@
                                                 </div>
                                             </td>
                                             <td class="px-1 py-5 text-sm">
-                                                {{ $service->users->detail_user->role }}
+                                                {{ $service->user->detail_user->role }}
                                             </td>
 
                                             <td class="px-1 py-5 text-sm">

@@ -34,7 +34,7 @@ class Service extends Model
     ];
 
     // One to Many
-    public function users()
+    public function user()
     {
         return $this->belongsTo('App\Models\User', 'users_id', 'id');
     }

@@ -25,6 +25,7 @@ class MemberController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -32,16 +33,18 @@ class MemberController extends Controller
      */
     public function index()
     {
-
-        // 1 , 2 didapat dari seeder
-
         $orders = Order::where('freelancer_id', Auth::user()->id)->get();
 
-        $progress = Order::where('freelancer_id', Auth::user()->id)->where('order_status_id', 2)->count();
-
-        $completed = Order::where('freelancer_id', Auth::user()->id)->where('order_status_id', 1)->count();
-
-        $freelancer = Order::where('buyer_id', Auth::user()->id)->where('order_status_id', 2)->distinct('freelancer_id')->count();
+        $progress = Order::where('freelancer_id', Auth::user()->id)
+                        ->where('order_status_id', 2)
+                        ->count();
+        $completed = Order::where('freelancer_id', Auth::user()->id)
+                        ->where('order_status_id', 1)
+                        ->count();
+        $freelancer = Order::where('buyer_id', Auth::user()->id)
+                        ->where('order_status_id', 2)
+                        ->distinct('freelancer_id')
+                        ->count();
 
         return view('pages.dashboard.index', compact('orders', 'progress', 'completed', 'freelancer'));
     }

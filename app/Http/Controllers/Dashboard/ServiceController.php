@@ -109,6 +109,7 @@ class ServiceController extends Controller
                 $tagline->tagline = $value;
                 $tagline->save();
             }
+
         }
 
         toast()->success('Save has been success');

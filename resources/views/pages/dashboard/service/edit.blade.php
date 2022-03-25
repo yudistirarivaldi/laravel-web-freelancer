@@ -212,10 +212,8 @@
         $("#addAdvantagesRow").click(function() {
             var html = '';
             html += '<input placeholder="Keunggulan Service" type="text" name="advantage_user[]" id="advantage_user" autocomplete="advantage_user" class="block w-full py-3 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" required>';
-
             $('#newAdvantagesRow').append(html);
         });
-
         // remove row
         $(document).on('click', '#removeAdvantagesRow', function() {
             $(this).closest('#inputFormAdvantagesRow').remove();
@@ -227,10 +225,8 @@
         $("#addServicesRow").click(function() {
             var html = '';
             html += '<input placeholder="Keunggulan Kamu" type="text" name="advantage_service[]" id="advantage_service" autocomplete="advantage_service" class="block w-full py-3 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" required>';
-
             $('#newServicesRow').append(html);
         });
-
         // remove row
         $(document).on('click', '#removeServicesRow', function() {
             $(this).closest('#inputFormServicesRow').remove();
@@ -242,10 +238,8 @@
         $("#addTaglineRow").click(function() {
             var html = '';
             html += '<input placeholder="Tagline" type="text" name="tagline[]" id="tagline" autocomplete="tagline" class="block w-full py-3 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" required>';
-
             $('#newTaglineRow').append(html);
         });
-
         // remove row
         $(document).on('click', '#removeTaglineRow', function() {
             $(this).closest('#inputFormTaglineRow').remove();
@@ -257,10 +251,8 @@
         $("#addThumbnailRow").click(function() {
             var html = '';
             html += '<input placeholder="Thumbnail" type="file" name="thumbnail[]" id="thumbnail" autocomplete="thumbnail" class="block w-full py-3 pl-5 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" required>';
-
             $('#newThumbnailRow').append(html);
         });
-
         // remove row
         $(document).on('click', '#removeThumbnailRow', function() {
             $(this).closest('#inputFormThumbnailRow').remove();
