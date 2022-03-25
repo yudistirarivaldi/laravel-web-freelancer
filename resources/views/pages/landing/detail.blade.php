@@ -27,7 +27,7 @@
                 <main class="p-4 lg:col-span-8 md:col-span-12">
                     <!-- details heading -->
                     <div class="details-heading">
-                        <h1 class="text-2xl font-semibold">I Will Design WordPress eCommerce Modules</h1>
+                        <h1 class="text-2xl font-semibold">{{ $service->title ?? '' }}</h1>
                         <div class="my-3">
                             @include('components.Landing.rating')
                         </div>
@@ -36,12 +36,20 @@
                         <img :src="featured" alt="" class="rounded-lg cursor-pointer w-100" data-lity>
                         <div class="flex overflow-x-scroll hide-scroll-bar dragscroll">
                             <div class="flex mt-2 flex-nowrap">
-                                <img :class="{'border-4 border-serv-button': active === 1}" @click="changeThumbnail('{{ url('https://source.unsplash.com/_SgRNwAVNKw/1600x900/') }}',1)" src="{{ url('https://source.unsplash.com/_SgRNwAVNKw/250x160/') }}" alt="" class="inline-block mr-2 rounded-lg cursor-pointer w-36">
-                                <img :class="{'border-4 border-serv-button': active === 2}" @click="changeThumbnail('{{ url ('https://source.unsplash.com/GXNo-OJynTQ/1600x900/') }}',2)" src="{{ url('https://source.unsplash.com/GXNo-OJynTQ/250x160/') }}" alt="" class="inline-block mr-2 rounded-lg cursor-pointer w-36">
-                                <img :class="{'border-4 border-serv-button': active === 3}" @click="changeThumbnail('{{ url ('https://source.unsplash.com/x-HpilsdKEk/1600x900/') }}',3)" src="{{ url('https://source.unsplash.com/x-HpilsdKEk/250x160/') }}" alt="" class="inline-block mr-2 rounded-lg cursor-pointer w-36">
-                                <img :class="{'border-4 border-serv-button': active === 4}" @click="changeThumbnail('{{ url ('https://source.unsplash.com/hLit2zL-Dhk/1600x900/') }}',4)" src="{{ url('https://source.unsplash.com/hLit2zL-Dhk/250x160/') }}" alt="" class="inline-block mr-2 rounded-lg cursor-pointer w-36">
-                                <img :class="{'border-4 border-serv-button': active === 5}" @click="changeThumbnail('{{ url('https://source.unsplash.com/i1VQZsU86ok/1600x900/') }}',5)" src="{{ url('https://source.unsplash.com/i1VQZsU86ok/250x160/') }}" alt="" class="inline-block mr-2 rounded-lg cursor-pointer w-36">
-                                <img :class="{'border-4 border-serv-button': active === 6}" @click="changeThumbnail('{{ url ('https://source.unsplash.com/iEiUITs149M/1600x900/') }}',6)" src="{{ url('https://source.unsplash.com/iEiUITs149M/250x160/') }}" alt="" class="inline-block mr-2 rounded-lg cursor-pointer w-36">
+
+                                <div class="flex mt-2 flex-nowrap">
+
+                                    @forelse($thumbnail as $item)
+                                        <img :class="{ 'border-4 border-serv-button': active ===  {{ $item->id }} }"
+                                        onclick="changeThumbnail('{{ url(Storage::url($item->thumbnail)) }}', {{ $item->id }})" src="{{ url(Storage::url($item->thumbnail)) }}" alt="thumbnail service" class="inline-block mr-2 rounded-lg cursor-pointer h-20 w-36 object-cover">
+
+
+                                        @empty
+
+                                    @endforelse
+
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -59,18 +67,20 @@
                                 <h2 class="text-xl font-semibold">About This <span class="text-serv-button">Services</span></h2>
                                 <div class="mt-4 mb-8 content-description">
                                     <p>
-                                        I will design wordpress ecommerce modules, professional website for you using WordPress! With this Services
+                                        {{ $service->description ?? '' }}
                                     </p>
                                 </div>
                                 <h3 class="my-4 text-lg font-semibold">Why choose my Service?</h3>
                                 <ul class="mb-4 list-check">
-                                    <li class="pl-10 my-2">Fast delivery</li>
-                                    <li class="pl-10 my-2">Wide plugin support within WordPress</li>
-                                    <li class="pl-10 my-2">I can design logos and such for your website</li>
-                                    <li class="pl-10 my-2">Easily Communicate with me</li>
+                                    @forelse ($advantage_service as $advantage_service_item)
+                                        <li class="pl-10 my-2">{{ $advantage_service_item->advantage ?? '' }}</li>
+                                    @empty
+                                        {{-- empty --}}
+                                    @endforelse
+
                                 </ul>
                                 <p class="mb-4">
-                                    If you only require modifications made to an existing WordPress website that you have, I have a different Services for that, which you can find on my profile!
+                                   {{ $service->note }}
                                 </p>
                                 <p class="mb-4 font-medium">
                                     Contact me to get started!
@@ -81,11 +91,23 @@
                                 <div class="grid md:grid-cols-12">
                                     <div class="flex items-center col-span-12 p-2 lg:col-span-6">
                                         <div class="flex items-center space-x-4">
+
+                                            @if ($service->user->detail_user->photo != NULL)
+                                                <img class="w-20 h-20 object-cover rounded-full" src="{{ url(Storage::url($service->user->detail_user->photo)) }}" alt="photo profile" loading="lazy">
+                                            @else
+
+                                                <svg class="w-20 h-20 object-cover rounded-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                </svg>
+
+                                            @endif
+
                                             <img src="{{ url('https://avatars2.githubusercontent.com/u/1490347?s=460&u=39d7a6b9bc030244e2c509119e5f64eabb2b1727&v=4') }}" alt="My profile" class="w-20 h-20 rounded-full ">
+
                                         </div>
                                         <div class="flex-grow p-4 -mt-8 leading-8 lg:mt-0">
                                             <div class="text-lg font-semibold text-gray-700">
-                                                Alex Jones
+                                                {{ $service->user->name ?? '' }}
                                             </div>
                                             <div class="text-gray-400">
                                                 Bandung, Indonesia
@@ -101,27 +123,30 @@
                                 <h3 class="my-4 text-lg font-semibold">Biography</h3>
                                 <div class="mt-4 mb-8 content-description">
                                     <p>
-                                        I am a web developer and web designer. I have an Associate Degree in Software
-                                        and Web Development, and I have much experience in programming languages,
-                                        such as HTML5, CSS3, PHP, Javascript and PHP. I can use Bootstrap and WordPress.
-                                        I will provide fast response and clear communication in several languages.
-                                        Feel free to contact me, thank you!
+                                       {{ $service->user->detail_user->biography ?? '' }}
                                     </p>
                                 </div>
                                 <h3 class="my-4 text-lg font-semibold">My Experiences</h3>
                                 <ul class="mb-8 list-check">
-                                    <li class="pl-10 my-2">More than 9 years of experience</li>
-                                    <li class="pl-10 my-2">Knowledge in the fields of interface design, marketing and etc</li>
-                                    <li class="pl-10 my-2">Lead Developer at Sony Music for 8 Years</li>
+                                    @forelse ($advantage_user as $advantage_user_item)
+                                        <li class="pl-10 my-2">{{ $advantage_user_item->advantage ?? '' }}</li>
+                                    @empty
+
+                                    @endforelse
+
                                 </ul>
                                 <h3 class="my-4 text-lg font-semibold">Skills</h3>
                                 <div class="mb-8 skills">
-                                    <span class="inline-block px-3 py-1 mr-2 rounded bg-serv-services-bg">Web Development</span>
-                                    <span class="inline-block px-3 py-1 mr-2 rounded bg-serv-services-bg">Web Design</span>
+                                @forelse ($tagline as $tagline_item)
+                                    <span class="inline-block px-3 py-1 mr-2 rounded bg-serv-services-bg">{{ $tagline_item->tagline }}</span>
+                                @empty
+
+                                @endforelse
+
                                 </div>
                                 <hr class="border-serv-services-bg">
                                 <p class="my-4 text-lg text-gray-400">
-                                    Joined Since 20 April 2021
+                                    Joined since {{ date("d F Y",strtotime($service->created_at)) ?? '' }}
                                 </p>
                             </div>
                             <div x-show.transition.duration.500ms="tab === 'reviews'">
