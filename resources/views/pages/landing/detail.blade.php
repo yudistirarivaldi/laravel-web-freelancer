@@ -41,8 +41,7 @@
 
                                     @forelse($thumbnail as $item)
                                         <img :class="{ 'border-4 border-serv-button': active ===  {{ $item->id }} }"
-                                        onclick="changeThumbnail('{{ url(Storage::url($item->thumbnail)) }}', {{ $item->id }})" src="{{ url(Storage::url($item->thumbnail)) }}" alt="thumbnail service" class="inline-block mr-2 rounded-lg cursor-pointer h-20 w-36 object-cover">
-
+                                        @click="changeThumbnail('{{ url(Storage::url($item->thumbnail)) }}', {{ $item->id }})" src="{{ url(Storage::url($item->thumbnail)) }}" alt="thumbnail service" class="inline-block mr-2 rounded-lg cursor-pointer h-20 w-36 object-cover">
 
                                         @empty
 
@@ -102,7 +101,6 @@
 
                                             @endif
 
-                                            <img src="{{ url('https://avatars2.githubusercontent.com/u/1490347?s=460&u=39d7a6b9bc030244e2c509119e5f64eabb2b1727&v=4') }}" alt="My profile" class="w-20 h-20 rounded-full ">
 
                                         </div>
                                         <div class="flex-grow p-4 -mt-8 leading-8 lg:mt-0">
@@ -156,27 +154,40 @@
                         </div>
                     </div>
                 </main>
+
                 <aside class="p-4 lg:col-span-4 md:col-span-12 md:pt-0">
                     <div class="mb-4 border rounded-lg border-serv-testimonial-border">
                         <!--horizantil margin is just for display-->
                         <div class="flex items-start px-4 pt-6">
-                            <img class="object-cover w-16 h-16 mr-4 rounded-full" src="{{ url('https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60') }}" alt="avatar">
+
+                            @if ($service->user->detail_user->photo != NULL)
+                                <img class="object-cover w-16 h-16 mr-4 rounded-full" src="{{ url(Storage::url($service->user->detail_user->photo)) }}" alt="photo profile" loading="lazy">
+
+                            @else
+
+                                <svg class="object-cover w-16 h-16 mr-4 rounded-full" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+
+                            @endif
+
+
                             <div class="w-full">
                                 <div class="flex items-center justify-between">
-                                    <h2 class="my-1 text-xl font-medium text-serv-bg">Farzhan Pill</h2>
+                                    <h2 class="my-1 text-xl font-medium text-serv-bg">{{ $service->user->name ?? '' }}</h2>
                                 </div>
                                 <p class="text-md text-serv-text">
-                                    Website Developer
+                                    {{ $service->user->detail_user->role ?? '' }}
                                 </p>
                             </div>
                         </div>
-                        <div class="flex items-center px-2 py-3 mx-4 mt-4 border rounded-full border-serv-testimonial-border">
+                        <div class="flex items-center px-2 py-3 mx-4 mt-4 border rounded-full border-serv-t estimonial-border">
                             <div class="flex-1 text-sm font-medium text-center">
                                 <svg class="inline" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="12" cy="12" r="8" stroke="#082431" stroke-width="1.5" />
                                     <path d="M12 7V12L15 13.5" stroke="#082431" stroke-width="1.5" stroke-linecap="round" />
                                 </svg>
-                                7 Days Delivery
+                               {{ $service->delivery_time ?? '' }} Days Delivery
                             </div>
                             <div class="flex-1 text-sm font-medium text-center">
                                 <svg class="inline" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -186,7 +197,7 @@
                                     <path d="M7 21.5L4.14142 18.6414C4.06332 18.5633 4.06332 18.4367 4.14142 18.3586L7 15.5" stroke="#082431" stroke-width="1.5" stroke-linecap="round" />
                                     <path d="M16 3L18.8586 5.85858C18.9367 5.93668 18.9367 6.06332 18.8586 6.14142L16 9" stroke="#082431" stroke-width="1.5" stroke-linecap="round" />
                                 </svg>
-                                1 Revision Limit
+                               {{ $service->revision_limit ?? '' }} Revision
                             </div>
                         </div>
                         <div class="px-4 pt-4 pb-2 features-list">
@@ -205,23 +216,50 @@
                                         Price starts from:
                                     </td>
                                     <td class="mb-4 text-xl font-semibold text-right text-serv-button">
-                                        Rp120.000
+                                        {{ 'Rp.'.number_format($service->price) ?? '' }}
                                     </td>
                                 </tr>
 
                             </table>
                         </div>
                         <div class="px-4 pb-4 booking">
-                            <a href="#" class="block px-12 py-4 my-2 text-lg font-semibold text-center text-white bg-serv-button rounded-xl">
+
+                            @auth
+                            <a href="{{ route('booking.landing', $service->id) }}" class="block px-12 py-4 my-2 text-lg font-semibold text-center text-white bg-serv-button rounded-xl">
                                 Booking Now
                             </a>
+                            @endauth
+
+                            @guest
+                                <a onclick="toggleModal('loginModal')" class="block px-12 py-4 my-2 text-lg font-semibold text-center text-white bg-serv-button rounded-xl">Login Now
+                            </a>
+                            @endguest
+
                         </div>
                     </div>
                 </aside>
             </div>
         </section>
         <div class="pt-6 pb-20 mx-8 lg:mx-20">
-
         </div>
 
 @endsection
+
+@push('after-script')
+
+        <script>
+            function gallery() {
+                return {
+                    featured: '{{ url(Storage::url($item->thumbnail)) }}',
+                    active: 1,
+                    changeThumbnail: function(url, position) {
+                        this.featured = url;
+                        this.active = position;
+                    }
+                }
+            }
+        </script>
+
+@endpush
+
+

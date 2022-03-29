@@ -28,7 +28,7 @@ class CreateOrderTable extends Migration
             $table->date('expired')->nullable();
 
             // $table->integer('order_status_id')->nullable();
-            $table->foreignId('order_status_id')->nullable()->index('fk_order_status_to_order_status');
+            $table->foreignId('order_status_id')->nullable()->index('fk_order_to_order_status');
 
             $table->softDeletes();
             $table->timestamps();

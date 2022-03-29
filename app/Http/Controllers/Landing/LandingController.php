@@ -138,7 +138,7 @@ class LandingController extends Controller
         $order->order_status_id = 4;
         $order->save();
 
-        $order_detail = Order::where('id', $order->id)->first;
+        $order_detail = Order::where('id', $order->id)->first();
 
         return redirect()->route('detail.booking.landing', $order->id);
     }
