@@ -73,10 +73,11 @@ class MyOrderController extends Controller
     // Manggil model order
     public function show(Order $order)
     {
-        $service = Service::where('id', $order('service_id'))->first();
-        $thumbnail = Thumbnail::where('service_id', $order['service_id'])->get();
+        $service = Service::where('id', $order['service_id'])->first();
+
+        $thumbnail = ThumbnailService::where('service_id', $order['service_id'])->get();
         $advantage_service = AdvantageService::where('service_id', $order['service_id'])->get();
-        $advantage_user = ThumbnailService::where('service_id', $order['service_id'])->get();
+        $advantage_user = AdvantageUser::where('service_id', $order['service_id'])->get();
         $tagline = Tagline::where('service_id', $order['service_id']);
 
         return view('pages.dashboard.order.detail', compact('order', 'thumbnail', 'advantage_service', 'advantage_user', 'tagline', 'service'));
@@ -131,7 +132,7 @@ class MyOrderController extends Controller
         return abort(404);
     }
 
-    public function accepted($id)
+    public function accept($id)
     {
         $order = Order::find($id);
         $order->order_status_id = 2;
@@ -141,7 +142,7 @@ class MyOrderController extends Controller
         return back();
     }
 
-    public function rejected($id)
+    public function reject($id)
     {
         $order = Order::find($id);
         $order->order_status_id = 3;

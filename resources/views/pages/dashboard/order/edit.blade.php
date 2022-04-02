@@ -37,30 +37,45 @@
                                             <td class="px-1 py-5 text-sm w-2/8">
                                                 <div class="flex items-center text-sm">
                                                     <div class="relative w-10 h-10 mr-3 rounded-full md:block">
-                                                        <img class="object-cover w-full h-full rounded-full" src="{{ url('https://randomuser.me/api/portraits/men/6.jpg') }}" alt="" loading="lazy" />
-                                                        <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+
+                                                         @if ($order->user_buyer->detail_user->photo != NULL)
+                                                            <img class="object-cover w-full h-full rounded-full" src="{{ url(url(Storage::url($order->user_buyer->detail_user->photo))) }}" alt="photo freelancer" loading="lazy" />
+                                                        @else
+                                                             <svg class="object-cover w-full h-full rounded text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                                                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                            </svg>
+                                                        @endif
+
                                                     </div>
                                                     <div>
-                                                        <p class="font-medium text-black">Alexa Sara</p>
-                                                        <p class="text-sm text-gray-400">087785091245</p>
+                                                        <p class="font-medium text-black">{{ $order->user_buyer->name ?? '' }}</p>
+                                                        <p class="text-sm text-gray-400">{{ $order->user_buyer->detail_user->contact_number ?? '' }}</p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="w-2/6 px-1 py-5">
                                                 <div class="flex items-center text-sm">
                                                     <div class="relative w-10 h-10 mr-3 rounded-full md:block">
-                                                        <img class="object-cover w-full h-full rounded" src="{{ url('https://randomuser.me/api/portraits/men/3.jpg') }}" alt="" loading="lazy" />
+
+                                                        @if ($order->service->thumbnail_service[0]->thumbnail != NULL)
+                                                            <img class="object-cover w-full h-full rounded-full" src="{{ url(url(Storage::url($order->service->thumbnail_service[0]->thumbnail))) }}" alt="photo freelancer" loading="lazy" />
+                                                        @else
+                                                             <svg class="object-cover w-full h-full rounded text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                                                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                            </svg>
+                                                        @endif
+
                                                         <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                                                     </div>
                                                     <div>
                                                         <p class="font-medium text-black">
-                                                            Design WordPress <br>E-Commerce Modules
+                                                            {{ $order->service->title ?? '' }}
                                                         </p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="px-1 py-5 text-sm">
-                                                Rp120.000
+                                                {{ 'Rp '.number_format($order->service->price) ?? '' }}
                                             </td>
                                             <td class="px-1 py-5 text-xs text-red-500">
                                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline mb-1">
@@ -68,7 +83,7 @@
                                                     <path d="M7 3.5V7L9.33333 8.16667" stroke="#F26E6E" stroke-linecap="round" stroke-linejoin="round" />
                                                 </svg>
 
-                                                3 days left
+                                                {{ (strtotime($order->expired) -strtotime(date('Y-m-d'))) / 86400 ?? '' }} days left
                                             </td>
                                         </tr>
                                     </tbody>
@@ -90,7 +105,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form action="#" method="POST">
+
+                                <form action="{[route('member.order.update' [$order-id])]}" method="POST" enctype="multipart/form-data">
+
+                                    @csrf
+                                    @method('PUT')
+
                                     <div class="">
                                         <div class="p-1 mt-5">
                                             <div class="grid grid-cols-6 gap-6">
