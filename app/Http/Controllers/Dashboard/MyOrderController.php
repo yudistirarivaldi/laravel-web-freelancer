@@ -15,10 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 use File;
 use Auth;
 
-
-use App\Models\Order;
-use App\Models\OrderStatus;
 use App\Models\User;
+use App\Models\OrderStatus;
+use App\Models\Order;
 use App\Models\Service;
 use App\Models\AdvantageUser;
 use App\Models\AdvantageService;
@@ -31,6 +30,7 @@ class MyOrderController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -70,7 +70,6 @@ class MyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // Manggil model order
     public function show(Order $order)
     {
         $service = Service::where('id', $order['service_id'])->first();
@@ -78,7 +77,7 @@ class MyOrderController extends Controller
         $thumbnail = ThumbnailService::where('service_id', $order['service_id'])->get();
         $advantage_service = AdvantageService::where('service_id', $order['service_id'])->get();
         $advantage_user = AdvantageUser::where('service_id', $order['service_id'])->get();
-        $tagline = Tagline::where('service_id', $order['service_id']);
+        $tagline = Tagline::where('service_id', $order['service_id'])->get();
 
         return view('pages.dashboard.order.detail', compact('order', 'thumbnail', 'advantage_service', 'advantage_user', 'tagline', 'service'));
     }
@@ -91,7 +90,6 @@ class MyOrderController extends Controller
      */
     public function edit(Order $order)
     {
-        // Edit dijadikan untuk button submit
         return view('pages.dashboard.order.edit', compact('order'));
     }
 
@@ -104,7 +102,7 @@ class MyOrderController extends Controller
      */
     public function update(UpdateMyOrderRequest $request, Order $order)
     {
-        $data = Request->all();
+        $data = $request->all();
 
         if(isset($data['file'])){
             $data['file'] = $request->file('file')->store(
@@ -119,8 +117,8 @@ class MyOrderController extends Controller
 
         toast()->success('Submit order has been success');
         return redirect()->route('member.order.index');
-
     }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -131,6 +129,8 @@ class MyOrderController extends Controller
     {
         return abort(404);
     }
+
+    // custom
 
     public function accept($id)
     {
@@ -151,5 +151,4 @@ class MyOrderController extends Controller
         toast()->success('Reject order has been success');
         return back();
     }
-
 }

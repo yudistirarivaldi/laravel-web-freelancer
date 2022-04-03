@@ -89,7 +89,7 @@
                                 </table>
                                 <div class="flex p-8 border border-gray-200 rounded-lg bg-serv-upload-bg h-128">
                                     <div class="m-auto text-center">
-                                        <img src="/images/services-file-icon.svg" alt="" class="w-20 mx-auto">
+                                        <img src="{{ asset('assets/images/services-file-icon.svg') }}" alt="" class="w-20 mx-auto">
                                         <h2 class="mt-8 mb-1 text-2xl font-semibold text-gray-700">
                                            {{ substr($order->file, -10 ?? '') }}
                                         </h2>
@@ -114,10 +114,11 @@
                                             <div class="grid grid-cols-6 gap-6">
                                                 <div class="col-span-6">
                                                     <label for="service-name" class="block mb-3 font-medium text-gray-700 text-md">Note</label>
-                                                    <textarea placeholder="Enter your biography here.." type="text" name="service-name" id="service-name" autocomplete="service-name" class="block w-full py-3 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" rows="4" readonly>{{ $order->note }}</textarea>
+                                                    <textarea placeholder="Enter your biography here.." type="text" name="service-name" id="service-name" autocomplete="service-name" class="block w-full py-3 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" rows="4" readonly>{{ $order->service->note ?? '' }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="px-1 py-4 text-right">
                                             <a href="{{ route('member.request.index') }}" type="button" class="inline-flex justify-center px-4 py-2 mr-4 text-sm font-medium text-gray-700 bg-white border border-gray-600 rounded-lg shadow-sm hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300" onclick="return confirm('Are you sure want to back?, Any changes you make will not be saved')">
                                                 Back
@@ -130,7 +131,7 @@
                                             </a>
 
                                             @else
-                                            
+
                                             <a type="button" class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-lg shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" disabled >
                                                 Approve
                                             </a>
